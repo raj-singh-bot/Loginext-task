@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import SingleUser from "./components/singleuser/SingleUser";
+import Container from "react-bootstrap/Container";
+import { Row } from "react-bootstrap";
+import { UserProvider } from "./context/UserProvider";
+import { UserData } from "./context/UserProvider";
+import Loader from "./components/Loader/Loader";
 
 function App() {
+  const { data } = UserData();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container fluid>
+      <Row>
+        {data ? (
+          data.map((item) => {
+            return <SingleUser item={item} key={item.id} />;
+          })
+        ) : (
+          <Loader />
+        )}
+      </Row>
+    </Container>
   );
 }
 
